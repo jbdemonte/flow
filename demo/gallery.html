@@ -1,0 +1,126 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<head>
+  <link href="style.css" rel="stylesheet" type="text/css" />
+  <script type="text/javascript" src="jquery/jquery-1.7.1.js"></script>
+  <script type="text/javascript" src="jquery/jquery.mousewheel.min.js"></script>
+  <script type="text/javascript" src="../flow/jquery.flow.js"></script>
+  <script type="text/javascript" src="../flow/plugins/carousel.js"></script>
+  <script type="text/javascript" src="js/mixed.js"></script>
+  <style>
+    #main{
+      height: 150px;
+      width: 300px;
+      position: relative;
+      margin: 0 auto;
+    }
+    #main .item{
+      display: block;
+      position: absolute;
+      top:0px;
+      left:0px;
+    }
+    #main .item div{
+      position: absolute;
+      bottom:5px;
+      left:0px;
+      background-color: #FFFFFF;
+      opacity:0.6;
+    }
+    #main .item div span{
+      display: block;
+      text-align:left;
+      color: #000000;
+      padding-left:5px;
+    }
+    #main .item div span.date{
+      font-size: 10px;
+    }
+    #main .item div span.name{
+      font-size: 12px;
+    }
+    #coverflow{
+      overflow: hidden;
+      height: 60px;
+      width: 500px;
+      border: 0px;
+      margin: 10px auto;
+    }
+  </style>
+  <script>
+    $(function(){ // on ready
+    
+      $("#coverflow").flow({
+        duration:350,
+        width: 50,
+        visible:{
+          before: 3,
+          after: 3
+        },
+        onRunEnd:function(status){
+          $("#main .item").fadeOut('slow', function() {
+            $(this).remove();
+          });
+          var w, h, r = status.current.element.width() / status.current.element.height();
+          
+          // get the new width and height keeping the ratio
+          w = Math.floor(Math.min($("#main").height() * r, $("#main").width()));
+          h = Math.floor(w / r);
+            
+          var $div = $(document.createElement("div"))
+            .addClass("item")
+            .css("display", "none")
+            .width(w)
+            .height(h)
+            // centering the element
+            .css('left', ($("#main").width() - w) >> 1)
+            .css('top', ($("#main").height() - h) >> 1)
+            .append(
+              $(document.createElement("img"))
+                .attr("src", status.current.element.attr("src"))
+                .width(w)
+                .height(h)
+            )
+            .append(
+              $(document.createElement("div"))
+                .width(w)
+                .append(
+                  $(document.createElement("span"))
+                    .addClass("name")
+                    .text(status.current.element.data("name"))
+                )
+                .append(
+                  $(document.createElement("span"))
+                    .addClass("date")
+                    .text(status.current.element.data("date"))
+                )
+            );
+            
+          $("#main").append($div);
+          $div.fadeIn("slow");
+        }
+      });
+      
+    });
+  </script>
+</head>
+<body>
+  <div id="main"></div>
+  <div id="coverflow">
+    <img src="img/a.jpg" data-date="2012-01-01" data-name="Pict #1">
+    <img src="img/b.png" data-date="2012-01-02" data-name="Pict #2">
+    <img src="img/c.png" data-date="2012-01-03" data-name="Pict #3">
+    <img src="img/d.jpg" data-date="2012-01-04" data-name="Pict #4">
+    <img src="img/e.jpg" data-date="2012-01-05" data-name="Pict #5">
+    <img src="img/f.jpg" data-date="2012-01-06" data-name="Pict #6">
+    <img src="img/g.jpg" data-date="2012-01-07" data-name="Pict #7">
+    <img src="img/h.jpg" data-date="2012-01-08" data-name="Pict #8">
+    <img src="img/i.jpg" data-date="2012-01-09" data-name="Pict #9">
+    <img src="img/j.jpg" data-date="2012-01-10" data-name="Pict #10">
+    <img src="img/k.jpg" data-date="2012-01-11" data-name="Pict #11">
+    <img src="img/l.jpg" data-date="2012-01-12" data-name="Pict #12">
+    <img src="img/m.png" data-date="2012-01-13" data-name="Pict #13">
+    <img src="img/n.jpg" data-date="2012-01-14" data-name="Pict #14">
+    <img src="img/o.jpg" data-date="2012-01-15" data-name="Pict #15">
+  </div>
+</body>
+</html>

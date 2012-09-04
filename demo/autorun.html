@@ -1,0 +1,56 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<head>
+  <link href="style.css" rel="stylesheet" type="text/css" />
+  <script type="text/javascript" src="jquery/jquery-1.7.1.js"></script>
+  <script type="text/javascript" src="../flow/jquery.flow.js"></script>
+  <script type="text/javascript" src="../flow/plugins/rotation.js"></script>
+  <script>
+    $(function(){ // on ready
+    
+      $("#coverflow").flow({
+        height:{
+          min: 10,
+          max: 200
+        }
+      });
+      
+      var id;
+      $("#autorun").change(function(){
+        if ($(this).is(':checked')){
+          $("#coverflow").bind("run_end.flow", function(event, complete){
+            if (complete){
+              id = setTimeout(
+                function(){
+                  if ($("#autorun").is(':checked')){
+                    $("#coverflow").flow('next');
+                  }
+                }, 50);
+            }
+          });
+          $("#coverflow").flow('next');
+        } else {
+          $("#coverflow").unbind("run_end.flow");
+          clearTimeout(id);
+        }
+      });
+      
+    });
+  </script>
+</head>
+<body>
+  <div id="coverflow">
+    <img src="img/a.jpg">
+    <img src="img/b.png">
+    <img src="img/c.png">
+    <img src="img/d.jpg">
+    <img src="img/e.jpg">
+    <img src="img/f.jpg">
+    <img src="img/g.jpg">
+    <img src="img/h.jpg">
+    <img src="img/i.jpg">
+    <img src="img/j.jpg">
+    <img src="img/k.jpg">
+  </div>
+  <input type="checkbox" id="autorun"><label for="autorun">Autorun</label>
+</body>
+</html>

@@ -1,0 +1,40 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<head>
+  <link href="style.css" rel="stylesheet" type="text/css" />
+  <script type="text/javascript" src="jquery/jquery-1.7.1.js"></script>
+  <script type="text/javascript" src="jquery/jquery.mousewheel.min.js"></script>
+  <script type="text/javascript" src="../flow/jquery.flow.js"></script>
+  <script type="text/javascript" src="../flow/plugins/slider.js"></script>
+  <script type="text/javascript" src="js/mixed.js"></script>
+  <style>
+    #coverflow{
+      height:500px;
+      width: 150px;
+      margin: 30px auto;
+    }
+  </style>
+  <script>
+    $(function(){ // on ready
+    
+      $("#coverflow").flow({
+        duration:350,
+        vertical: true,
+        position: "middle" // left / right
+      });
+      
+    });
+  </script>
+</head>
+<body>
+  <div id="coverflow">
+    <img src="img/a.jpg">
+    <img src="img/b.png">
+    <img src="img/c.png">
+    <img src="img/d.jpg">
+    <img src="img/e.jpg">
+    <img src="img/f.jpg">
+    <img src="img/g.jpg">
+    <img src="img/h.jpg">
+  </div>
+</body>
+</html>

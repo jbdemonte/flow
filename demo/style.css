@@ -1,0 +1,20 @@
+body{
+  background-color: #222222;
+  color: #FFFFFF;
+  text-align: center;
+}
+
+#coverflow,
+.coverflow{
+  height:300px;
+  width:800px;
+  border:0px;
+  margin:10px auto 150px;
+  position:relative;
+}
+#coverflow img,
+.coverflow img{
+  display:block;
+  position: absolute;
+  cursor: pointer;
+}

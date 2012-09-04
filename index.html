@@ -1,0 +1,220 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<html>
+  <head>
+    <title>Flow - jQuery Plugin to create coverflow</title>
+  </head>
+  <body>
+    <h1>Flow 2.7</h1>
+    
+    <form action="https://www.paypal.com/cgi-bin/webscr" method="post">
+    <input type="hidden" name="cmd" value="_s-xclick">
+    <input type="hidden" name="hosted_button_id" value="VJNX5WRR6H27Q">
+    <input type="image" src="https://www.paypalobjects.com/en_GB/i/btn/btn_donate_LG.gif" border="0" name="submit" alt="PayPal — The safer, easier way to pay online.">
+    <img alt="" border="0" src="https://www.paypalobjects.com/fr_FR/i/scr/pixel.gif" width="1" height="1">
+    </form>
+    
+    <h2>Introduction</h2>
+    <p>
+      Flow is a flexible engine which allows to created various "coverflow", carousel and other types to displays pictures.<br>
+      Writing the engine of a jQuery display plugin is often 90% of the job, and the css image manages the rest. Flow is designed to allow you to create your own display by focusing on the css managing.<br> 
+      Since it is a pure engine, it does not embeed any display plugin however we have added some example plugin in the package.<br>
+      Take a look on the examples plugins of Flow and be creative enough to display your own pictures the way you want.<br>
+      Flow also embed a picture loader for a better user experience.<br />
+    Flow is compatible with all main browsers (ie7+, firefox, chrome, safari...)
+    </p>
+    
+    <h2>Demonstation</h2>
+    <p>The example below use the "rotation" plugin</p>
+    <ul>
+      <li><a href="demo/autorun.html">Autorun</a> : Event exploitation to create autorun feature</li>
+      <li><a href="demo/click.html">Click</a> : Click to focus on an image</li>
+      <li><a href="demo/mousewheel.html">MouseWheel</a> : Example of use of the <a href="https://github.com/brandonaaron/jquery-mousewheel/">jQuery MouseWheel plugin</a></li>
+    </ul>
+    <p>In the examples below, previous features are included to simplify tests</p>
+    <ul>
+      <li><a href="demo/easing.html">Easing</a> : Example of use of the <a href="http://gsgd.co.uk/sandbox/jquery/easing/">jQuery Easing plugin</a></li>
+      <li><a href="demo/multi.html">Multiple Flow</a> : Example of use of the multiple Flow on the same page</li>
+      <li><a href="demo/gallery.html">Gallery</a> : Example of a gallery integration displaying focus image with data</li>
+    </ul>
+    
+    <h2>Integrated plugins</h2>
+    <p>All these plugins keep the aspect ration of the images</p>
+    <ul>
+      <li><a href="demo/carousel.html">Carousel</a></li>
+      <li><a href="demo/rotation.html">Rotation</a></li>
+      <li>Slider : <a href="demo/slider.html">horizontal</a> - <a href="demo/slider-vertical.html">vertical</a></li>
+    </ul>
+    
+    <h2>Getting started</h2>
+    <h3>Source files</h3>
+    <p>
+      Flow requires at least one plugin, so you need to include three files: the jQuery library, the Flow library and the plugin.<br>
+      Have a look at the code extracted from one of the embedded demonstation: 
+    </p>
+    <pre>
+      &lt;script type="text/javascript" src="../jquery/jquery-1.7.1.js"&gt;&lt;/script&gt;
+      &lt;script type="text/javascript" src="./jquery/flow/jquery.flow.js"&gt;&lt;/script&gt;
+      &lt;script type="text/javascript" src="./jquery/flow/plugins/rotation.js"&gt;&lt;/script&gt;
+    </pre>
+    <p>
+      Many plugins can be appended to Flow on the same page.<br> 
+      If only one plugin is appended, there is no need to specify it when calling Flow, else you'll have to specify it's name. Thanks to the <i>plugin</i> property.<br>
+      If a missing plugin is required, Flow will use the first plugin available.<br>
+      Notice that the <i>plugin</i> property allows the use of an online object.
+    </p> 
+    
+    <h3>Using Flow</h3>
+    <p>It use a mixed parameter which can be a json object, a string or a number depending on the use.</p>
+    <h4>Initializing a Flow</h4>
+    <p>When calling Flow the first time, the parameter required is an object which redefine the default properties :</p>
+    <ul>
+      <li>namespace : string = "flow" : namespace used in the event triggered</li>
+      <li>plugin : string or object : Flow plugin to use</li>
+      <li>visible : object : 
+        <ul>
+          <li>before : integer or string = "auto" : count of element before the focused one</li>
+          <li>after : integer or string = "auto" : count of element after the focused one</li>
+        </ul>
+      </li>
+      <li>easing : string or function = "" : <a href="http://gsgd.co.uk/sandbox/jquery/easing/">jQuery Easing plugin</a></li>
+      <li>duration : integer = 300 : duration in second of the animation</li>
+      <li>delai : integer = 13 : tick duration of the clock of the animation (advanced)</li>
+    </ul>
+    
+    <h4>Sliding to a specific item</h4>
+    <p>Once initialized, you can access directly to a specific item using a numeric or a specific string parameter.</p>
+    <ul>
+      <li>numeric : item index (start from 0)</li>
+      <li>string = "previous" : slide to the previous item</li>
+      <li>string = "next" : slide to the next item</li>
+    </ul>
+    <pre>
+      $("#div").flow(2); // slide to the third item
+      ...
+      $("#div").flow("next"); // slide to the next item
+    </pre>
+    
+    <h4>Using events</h4>
+    <p>Flow trigs few difference events using its namespace. Each event is associated to a "on camel-cased" callback which can be defined in the initialization argument</p>
+    <ul>
+      <li>load_begin : start to load pictures</li>
+      <li>load_update (status : object): a picture has been loaded 
+        <ul>
+          <li>src : string : <i>src</i> attribute of the picture</li>
+          <li>loaded : integer : loaded picture count</li>
+          <li>total : integer : picture count</li>
+        </ul>
+      </li>
+      <li>load_end (status : object): all pictures had been loaded 
+        <ul>
+          <li>loaded : integer : loaded picture count</li>
+          <li>total : integer : picture count</li>
+        </ul>
+      </li>
+      <li>run_end (data : object): slide has stop 
+        <ul>
+          <li>complete : boolean : slide is complete (not stopped while animation has finished)</li>
+          <li>current : object : current focused item
+            <ul>
+              <li>element : jQuery object : dom element</li>
+            </ul>
+          </li>
+          <li>previous : object : previous focused item
+            <ul>
+              <li>element : jQuery object : dom element</li>
+            </ul>
+          </li>
+        </ul>
+      </li>
+    </ul>
+    <p>Here are two equivalent codes :</p>
+    <pre>
+      // callback association : onXxxYyy
+      $("#div").flow({
+        onRunEnd:function(data){
+          alert( data.current.element.attr("src") );
+        }
+      });
+      
+      // binding
+      
+      $("#div").flow();
+      ...
+      $("#div").bind("run_end.flow", function(event, data){
+        alert( data.current.element.attr("src") );
+      });
+    </pre>
+    
+    <h2>Writing a plugin</h2>
+    <p>A plugin is an object registered to Flow thanks to :</p>
+    <pre>$.fn.flow("plugin", plugin_name, plugin);</pre>
+    <p>The plugin object manages two functions :</p>
+    <ul>
+      <li>init : function(items, context) : initialization function run when all pictures are loaded
+        <ul>
+          <li>items : array of object
+            <ul>
+              <li>element : jQuery object : picture in the dom</li>
+              <li>size:
+                <ul>
+                  <li>width : integer : width of the element</li>
+                  <li>height : integer : height of the element</li>
+                  <li>ratio : float : width / height</li>
+                </ul>
+              </li>
+              <li>data : object = {} : a custom object to store data to the item</li>
+            </ul>
+          </li>
+          <li>context : object : contextual data
+            <ul>
+              <li>data : object = {} : a custom object to store data to the context</li>
+              <li>before : interger : count of element before the focused one</li>
+              <li>after : interger : count of element after the focused one</li>
+              <li>count : integer : element count</li>
+              <li>visible : integer : visible element count</li>
+              <li>options : object : options passed to the Flow</li>
+            </ul>
+          </li>
+        </ul>
+      </li>
+      <li>animate : function(items, context) : animate the elements
+        <ul>
+          <li>items : array of object
+            <ul>
+              <li>element : jQuery object : picture in the dom</li>
+              <li>size:
+                <ul>
+                  <li>width : integer : width of the element</li>
+                  <li>height : integer : height of the element</li>
+                  <li>ratio : float : width / height</li>
+                </ul>
+              </li>
+              <li>data : object = {} : a custom object to store data to the element</li>
+              <li>current : integer or undefined : current visible relative position (-x .. -1 .. 0 = focused .. 1 .. +y)</li>
+              <li>previous : integer or undefined : previous visible relative position</li>
+              <li>position : integer : relative position (include all non-visible elements</li>
+            </ul>
+          </li>
+          <li>context : object : contextual data
+            <ul>
+              <li>data : object = {} : a custom object to store data to the context</li>
+              <li>before : integer : count of element before the focused one</li>
+              <li>after : integer : count of element after the focused one</li>
+              <li>count : integer : element count</li>
+              <li>visible : integer : visible element count</li>
+              <li>options : object : options passed to the Flow</li>
+              <li>target : integer : element index to focus</li>
+              <li>location : integer : current element index focused</li>
+              <li>way : integer = +1 or -1 : direction to the animation</li>
+            </ul>
+          </li>
+        </ul>
+      </li>
+    </ul>
+    <p>
+      The <i>init</i> function is called once all pictures are loaded to allows to initalise the elements or to pre-calculate some data.<br>
+      A <i>data</i> property is stored in the <i>context</i> and in each <i>element</i> object to store the custom data.<br>
+    </p>
+
+  </body>
+</html>
