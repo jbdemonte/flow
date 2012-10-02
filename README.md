@@ -10,3 +10,8 @@ Since it is a pure engine, it does not embeed any display plugin however we have
 Take a look on the examples plugins of Flow and be creative enough to display your own pictures the way you want.  
 Flow also embed a picture loader for a better user experience.  
 Flow is compatible with all main browsers (ie7+, firefox, chrome, safari...)  
+
+Online demo
+-----------
+
+go to the [demo website](http://jb.demonte.fr/jquery/flow/)
